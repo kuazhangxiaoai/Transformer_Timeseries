@@ -54,7 +54,6 @@ class ElectricityFormatter(GenericDataFormatter):
 
   def __init__(self):
     """Initialises formatter."""
-
     self.identifiers = None
     self._real_scalers = None
     self._cat_scalers = None
@@ -111,10 +110,9 @@ class ElectricityFormatter(GenericDataFormatter):
     self._target_scaler = {}
     identifiers = []
     for identifier, sliced in df.groupby(id_column):
-
       if len(sliced) >= self._time_steps:
 
-        data = sliced[real_inputs].values
+        data = sliced[real_inputs].values #power-usage, hour, day-of-week, hours-from-start
         targets = sliced[[target_column]].values
         self._real_scalers[identifier] \
       = sklearn.preprocessing.StandardScaler().fit(data)

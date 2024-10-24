@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # ---------------------
-
+import os.path
 from time import time
 import numpy as np
 import torch
@@ -23,8 +23,6 @@ class Trainer(object):
     """
 
     def __init__(self, cnf):
-        # type: (Conf) -> Trainer
-
         torch.set_num_threads(3)
 
         self.cnf = cnf
@@ -72,7 +70,7 @@ class Trainer(object):
 
         # init logging stuffs
         self.log_path = cnf.exp_log_path
-        print(f'tensorboard --logdir={cnf.project_log_path.abspath()}\n')
+        print(f'tensorboard --logdir={cnf.project_log_path}\n')
         self.sw = SummaryWriter(self.log_path)
         self.log_freq = len(self.train_loader)
         self.train_losses = []
@@ -228,7 +226,7 @@ class Trainer(object):
         # save best model
         if self.best_test_loss is None or mean_test_loss < self.best_test_loss:
             self.best_test_loss = mean_test_loss
-            torch.save(self.model.state_dict(), self.log_path / self.cnf.exp_name + '_best.pth')
+            torch.save(self.model.state_dict(), os.path.join(str(self.log_path), self.cnf.exp_name + '_best.pth'))
 
     def run(self):
         """

@@ -14,7 +14,7 @@ import socket
 import random
 import torch
 import numpy as np
-from path import Path
+from pathlib import Path
 from typing import Optional
 import termcolor
 from datetime import datetime
@@ -51,7 +51,8 @@ class Conf(object):
         self.log_each_step = log
 
         # print project name and host name
-        self.project_name = Path(__file__).parent.parent.basename()
+        #self.project_name = Path(__file__).parent.parent.basename()
+        self.project_name = Path(__file__).parent.parent
         m_str = f'┃ {self.project_name}@{Conf.HOSTNAME} ┃'
         u_str = '┏' + '━' * (len(m_str) - 2) + '┓'
         b_str = '┗' + '━' * (len(m_str) - 2) + '┛'
@@ -88,6 +89,20 @@ class Conf(object):
         self.ds_name = y.get('ds_name', "electricity")  # type: str
         self.all_params = y  # type: dict
 
+        for k in self.all_params.keys():
+            v = self.all_params[k]
+            if k in ['train_begin', 'train_end', 'val_begin', 'val_end', 'test_begin', 'test_end']:
+                try:
+                    self.all_params[k] = datetime.strptime(
+                        v.split('.')[0].split(' ')[0],
+                        "%Y-%m-%d"
+                    )
+                except:
+                    self.all_params[k] = datetime.strptime(
+                        v.split('.')[0].split(' ')[0],
+                        "%Y/%m/%d"
+                    )
+
         self.exp_log_path = self.project_log_path / self.all_params["model"] / exp_name / datetime.now().strftime(
             "%m-%d-%Y - %H-%M-%S")
 
@@ -115,7 +130,7 @@ class Conf(object):
                 continue
             value = self.__dict__[key]
             if type(value) is Path or type(value) is str:
-                value = value.replace(Conf.LOG_PATH, '$LOG_PATH')
+                value = value.replace(str(Conf.LOG_PATH), '$LOG_PATH')
                 value = termcolor.colored(value, 'yellow')
             else:
                 value = termcolor.colored(f'{value}', 'magenta')

@@ -10,7 +10,6 @@ from inference import TS
 
 cudnn.benchmark = True
 
-
 @click.command()
 @click.option('--exp_name', type=str, default=None)
 @click.option('--conf_file_path', type=str, default=None)

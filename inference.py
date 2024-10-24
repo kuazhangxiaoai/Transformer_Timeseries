@@ -94,7 +94,7 @@ class TS(object):
         """
         with torch.no_grad():
             self.model.eval()
-            p10_forecast, p10_forecast, p90_forecast, target = None, None, None, None
+            p10_forecast, p50_forecast, p90_forecast, target = None, None, None, None
 
             t = time()
             for step, sample in enumerate(self.test_loader):

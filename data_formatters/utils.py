@@ -136,6 +136,7 @@ def make_data_formatter(exp_name):
         'electricity': data_formatters.electricity.ElectricityFormatter,
         'traffic': data_formatters.traffic.TrafficFormatter,
         'favorita': data_formatters.favorita.FavoritaFormatter,
+        'hotel':data_formatters.hotel.HotelFormatter
     }
 
     return data_formatter_class[exp_name]()
@@ -147,10 +148,11 @@ def csv_path_to_folder(path: str):
 
 def data_csv_path(exp_name):
     csv_map = {
-        'volatility': './data/volatility/formatted_omi_vol.csv',
-        'electricity': './data/electricity/hourly_electricity.csv',
-        'traffic': './data/traffic/hourly_data.csv',
-        'favorita': './data/favorita/favorita_consolidated.csv',
+        'volatility': 'D:/data/time_series_data/volatility/formatted_omi_vol.csv',
+        'electricity': 'D:/data/time_series_data/electricity/hourly_electricity.csv',
+        'traffic': 'D:/data/time_series_data/traffic/hourly_data.csv',
+        'favorita': 'D:/data/time_series_data/favorita/favorita_consolidated.csv',
+        'hotel': 'D:/data/time_series_data/hotel/hotel.csv'
     }
 
     return csv_map[exp_name]

@@ -30,8 +30,8 @@ These dataset-specific methods:
 
 import abc
 import enum
-
-
+from datetime import datetime
+import pandas as pd
 # Type defintions
 class DataTypes(enum.IntEnum):
   """Defines numerical types of each column."""
@@ -49,6 +49,45 @@ class InputTypes(enum.IntEnum):
   ID = 4  # Single column used as an entity identifier
   TIME = 5  # Single column exclusively used as a time index
 
+def convert_string_to_date(string):
+    try:
+        date = datetime.strptime(
+            string.split('.')[0].split(' ')[0],
+            "%Y-%m-%d"
+        )
+    except:
+        date = datetime.strptime(
+            string.split('.')[0].split(' ')[0],
+            "%Y/%m/%d"
+        )
+    return date
+
+def set_occupytion_of_date(df: pd.DataFrame, date):
+    occupytions = 0
+    for i, item in df.iterrows():
+        begin_date, end_date = item['begin_date'],item['end_date']
+        if not isinstance(begin_date, datetime):
+            begin_date = convert_string_to_date(begin_date)
+        if not isinstance(end_date, datetime):
+            end_date = convert_string_to_date(end_date)
+        if (date >= begin_date) and (date < end_date):
+            occupytions = occupytions + 1
+
+    return occupytions
+
+def set_occupytions_of_date(df: pd.DataFrame, dates):
+    occupytions = [0] * len(dates)
+    for i, item in df.iterrows():
+        begin_date, end_date = item['begin_date'],item['end_date']
+        if not isinstance(begin_date, datetime):
+            begin_date = convert_string_to_date(begin_date)
+        if not isinstance(end_date, datetime):
+            end_date = convert_string_to_date(end_date)
+        for j,date in enumerate(dates):
+            if (date >= begin_date) and (date < end_date):
+                occupytions[j] = occupytions[j] + 1
+
+    return occupytions
 
 class GenericDataFormatter(abc.ABC):
   """Abstract base class for all data formatters.

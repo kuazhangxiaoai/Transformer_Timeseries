@@ -103,6 +103,8 @@ class TSDataset(Dataset):
         id_col = self._get_single_col_by_type(InputTypes.ID)
         time_col = self._get_single_col_by_type(InputTypes.TIME)
         target_col = self._get_single_col_by_type(InputTypes.TARGET)
+        # input feature: power-usage, hour, day_of_week, hours-from-start, categorical-id
+        # output : power-usage
         input_cols = [
             tup[0]
             for tup in column_definition
