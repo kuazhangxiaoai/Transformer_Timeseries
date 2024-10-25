@@ -54,3 +54,5 @@ pe: original
 chunk_mode: None
 d_input: 5
 d_output: 3
+
+weights: /home/yanggang/PyCharmWorkspace/Transformer_Timeseries/weights/eletricity_best.pth

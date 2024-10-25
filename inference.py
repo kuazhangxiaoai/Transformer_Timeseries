@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # ---------------------
-
+import os
 from time import time
 import numpy as np
 import torch
@@ -74,19 +74,19 @@ class TS(object):
         self.progress_bar = ProgressBar(max_step=self.log_freq, max_epoch=self.cnf.epochs)
 
         # possibly load checkpoint
-        self.load_ck()
+        self.load_ck(cnf.all_params['weights'])
 
         print("Finished preparing datasets.")
 
-    def load_ck(self):
+    def load_ck(self, ck_path):
         """
         load training checkpoint
         """
-        ck_path = self.log_path / self.cnf.exp_name + '_best.pth'
-        if ck_path.exists():
-            ck = torch.load(ck_path)
-            print(f'[loading checkpoint \'{ck_path}\']')
-            self.model.load_state_dict(ck)
+        #ck_path = os.path.join(str(self.log_path), self.cnf.exp_name + '_best.pth')
+
+        ck = torch.load(ck_path)
+        print(f'[loading checkpoint \'{ck_path}\']')
+        self.model.load_state_dict(ck)
 
     def test(self):
         """

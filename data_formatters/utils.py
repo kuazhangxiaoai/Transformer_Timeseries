@@ -148,11 +148,11 @@ def csv_path_to_folder(path: str):
 
 def data_csv_path(exp_name):
     csv_map = {
-        'volatility': 'D:/data/time_series_data/volatility/formatted_omi_vol.csv',
-        'electricity': 'D:/data/time_series_data/electricity/hourly_electricity.csv',
-        'traffic': 'D:/data/time_series_data/traffic/hourly_data.csv',
-        'favorita': 'D:/data/time_series_data/favorita/favorita_consolidated.csv',
-        'hotel': 'D:/data/time_series_data/hotel/hotel.csv'
+        'volatility': '/media/yanggang/data/time_series_data/volatility/formatted_omi_vol.csv',
+        'electricity': '/media/yanggang/data/time_series_data/electricity/hourly_electricity.csv',
+        'traffic': '/media/yanggang/data/time_series_data/traffic/hourly_data.csv',
+        'favorita': '/media/yanggang/data/time_series_data/favorita/favorita_consolidated.csv',
+        'hotel': '/media/yanggang/data/time_series_data/hotel/hotel.csv'
     }
 
     return csv_map[exp_name]
